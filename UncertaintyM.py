@@ -168,8 +168,7 @@ def uncertainty_set14(probs, bootstrap_size=0, sampling_size=0, credal_size=0, l
 		p = p.transpose([1,0,2])
 	else:
 		p = probs
-		print("this is the selected option")
-
+		
 	if log:
 		print("------------------------------------set14 prob after averaging each ensemble")
 		print("Set14 p \n" , p)

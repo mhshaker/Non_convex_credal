@@ -10,13 +10,13 @@ prob_joint_array = []
 prob_m1_array = []
 prob_m2_array = []
 
-for j in range(5000): # data range
+for j in range(10): # data range
     prob_joint = []
     prob_m1 = []
     prob_m2 = []
 
-    for i in range(40): # model range
-        joint = np.random.randint(0,100, size=(4, 4))
+    for i in range(2): # model range
+        joint = np.random.randint(0,100, size=(2, 2))
         joint = joint / joint.sum()
         m1, m2 = margins(joint)
         joint = np.reshape(joint, (1,-1))
@@ -44,20 +44,20 @@ prob3 = np.array(prob_m2_array)
 
 
 # calculate Uncertainty 
-t1, e1, a1 = unc.uncertainty_ent(prob1)
-t2, e2, a2 = unc.uncertainty_ent(prob2)
-t3, e3, a3 = unc.uncertainty_ent(prob3)
+t1, e1, a1 = unc.uncertainty_set16(prob1)
+t2, e2, a2 = unc.uncertainty_set16(prob2)
+t3, e3, a3 = unc.uncertainty_set16(prob3)
 
 # check for sub-additivity
-unc = t1
-unc_add = t2 + t3 
+unc = e1
+unc_add = e2 + e3 
 
 if (unc <= unc_add).all():
     print("test Passed")
 else:
     print("test Failed")
 
-exit()
+# exit()
 # show the distributions that violate the sub-additivity axiom
 for i, (u, uu) in enumerate(zip(unc,unc_add)):
     if u > uu:
@@ -66,4 +66,5 @@ for i, (u, uu) in enumerate(zip(unc,unc_add)):
         print("m2\n",prob3[i])
         print("joint unc ", u)
         print("marginal unc ", uu)
+        exit()
 
